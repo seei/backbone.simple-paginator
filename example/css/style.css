@@ -1,0 +1,17 @@
+body {
+  background-color: #fbfbfb;
+}
+
+.container > div {
+  text-align: center;
+}
+
+.row {
+  margin: 40px;
+}
+
+.thumbnail > div {
+  display: block;
+  width: 100%;
+  height: 180px;
+}

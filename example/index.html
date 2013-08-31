@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Backbone Simple Paginator</title>
+  <link rel="stylesheet" href="./css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div class="container"></div>
+
+  <script type="text/template" id="colors-view">
+    <div class="row"></div>
+  </script>
+
+  <script type="text/template" id="color-view">
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <div style="background-color: <%= hex %>;"></div>
+      </div>
+    </div>
+  </script>
+
+  <script type="text/template" id="pagination-view">
+    <ul class="pagination">
+      <% if (currentPage != 1) { %>
+        <li><a href="#" class="first">&laquo;&laquo;</a></li>
+      <% } else { %>
+        <li class="disabled"><a href="#" class="first">&laquo;&laquo;</a></li>
+      <% } %>
+
+      <% if (currentPage != 1) { %>
+        <li><a href="#" class="prev">&laquo;</a></li>
+      <% } else { %>
+        <li class="disabled"><a href="#" class="prev">&laquo;</a></li>
+      <% } %>
+
+      <% _.each(pageSet, function(p) { %>
+        <% if (currentPage == p) { %>
+          <li class="active"><a href="#" class="page"><%- p %></a></li>
+        <% } else { %>
+          <li><a href="#" class="page"><%- p %></a></li>
+        <% } %>
+      <% }); %>
+
+      <% if (lastPage != currentPage && lastPage != 0) { %>
+        <li><a href="#" class="next">&raquo;</a></li>
+      <% } else { %>
+        <li class="disabled"><a href="#" class="next">&raquo;</a></li>
+      <% } %>
+
+      <% if (lastPage != currentPage && lastPage != 0) { %>
+        <li><a href="#" class="last">&raquo;&raquo;</a></li>
+      <% } else { %>
+        <li class="disabled"><a href="#" class="last">&raquo;&raquo;</a></li>
+      <% } %>
+    </ul>
+  </script>
+
+  <script src="./js/lib/underscore-min.js"></script>
+  <script src="./js/lib/jquery-2.0.3.min.js"></script>
+  <script src="./js/lib/backbone-min.js"></script>
+
+  <!-- Backbone.SimplePaginator -->
+  <script src="../backbone.simple-paginator.js"></script>
+
+  <script src="./js/config.js"></script>
+  <script src="./js/colors.js"></script>
+  <script src="./js/color_view.js"></script>
+  <script src="./js/pagination_view.js"></script>
+  <script src="./js/colors_view.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      var colors = new Colors(config.hexes);
+      var colorsView = new ColorsView({ collection: colors });
+      $('.container').prepend(colorsView.render().el);
+    });
+  </script>
+</body>
+</html>

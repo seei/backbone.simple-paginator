@@ -1,0 +1,14 @@
+{
+  "name": "backbone.simple-paginator",
+  "main": "backbone.simple-paginator.js",
+  "version": "0.1.0",
+  "description": "A small Backbone.Collection plugin for composing the multi-page pagination component.",
+  "keywords": [
+    "backbone",
+    "pagination"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*"
+  ]
+}
