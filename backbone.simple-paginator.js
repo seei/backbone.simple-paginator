@@ -1,13 +1,25 @@
 
 /**
- * Backbone.SimplePaginator v0.1.0
+ * Backbone.SimplePaginator v0.1.1
  * Copyright (c) 2013 Sei Kataoka <sei@uniba.jp>
  * Distributed under MIT license
  */
 
-(function(Backbone) {
+(function(root, factory) {
 
-  Backbone.SimplePaginator = Backbone.Collection.extend({
+  var Backbone = root.Backbone;
+
+  if (typeof define === 'function' && define.amd) {
+    return define(['backbone'], function(Backbone) {
+      return factory(Backbone);
+    });
+  }
+
+  Backbone.SimplePaginator = factory(Backbone);
+
+}(this, function(Backbone) {
+
+  return Backbone.Collection.extend({
 
     currentPage: 1,
 
@@ -97,4 +109,4 @@
 
   });
 
-})(Backbone);
+}));
