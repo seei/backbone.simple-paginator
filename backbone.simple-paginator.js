@@ -55,8 +55,8 @@
     },
 
     pager: function() {
-      var from = (this.currentPage - 1) * this.perPage
-        , to = from + this.perPage;
+      var from = (this.currentPage - 1) * this.perPage;
+      var to = from + this.perPage;
 
       if (!this.origModels) {
         this.origModels = this.models;
