@@ -2,7 +2,8 @@
 
   exports.Colors = Backbone.SimplePaginator.extend({
 
-    perPage: 4
+    // how many items per page should be shown
+    perPage: 4,
 
   });
 
