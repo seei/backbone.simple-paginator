@@ -1,6 +1,6 @@
 
 /**
- * Backbone.SimplePaginator v0.1.1
+ * Backbone.SimplePaginator v0.1.2
  * Copyright (c) 2013 Sei Kataoka <sei@uniba.jp>
  * Distributed under MIT license
  */
