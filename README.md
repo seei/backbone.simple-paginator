@@ -8,7 +8,7 @@ It was inspired by the [Backbone.Paginator](http://backbone-paginator.github.io/
 
 	$ bower install backbone.simple-paginator --save
 
-or download the latest version [here](http://github.com/seei/backbone.simple-paginator/archive/0.1.1.zip), and include `backbone.simple-paginator.js` in your page, after Backbone and it's dependencies.
+or download the latest version [here](https://github.com/seei/backbone.simple-paginator/archive/0.1.2.zip), and include `backbone.simple-paginator.js` in your page, after Backbone and it's dependencies.
 
 ## Usage example
 
