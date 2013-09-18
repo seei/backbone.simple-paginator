@@ -145,6 +145,24 @@ describe('Backbone.SimplePaginator', function() {
     });
   });
 
+  describe('splitWindow', function() {
+    it('should split 4 to left 2 and right 2', function() {
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.innerLeft).toEqual(2);
+      expect(simplePaginator.innerRight).toEqual(2);
+    });
+
+    it('should split 3 to left 1 and right 2', function() {
+      simplePaginator.innerWindow = 3;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.innerLeft).toEqual(1);
+      expect(simplePaginator.innerRight).toEqual(2);
+    });
+  });
+
   describe('info', function() {
     var colors;
 
@@ -164,6 +182,8 @@ describe('Backbone.SimplePaginator', function() {
       expect(info.lastPage).toBeDefined();
       expect(info.next).toBeDefined();
       expect(info.previous).toBeDefined();
+      expect(info.leftTruncated).toBeDefined();
+      expect(info.rightTruncated).toBeDefined();
       expect(info.pageSet).toBeDefined();
     });
   });
@@ -198,11 +218,124 @@ describe('Backbone.SimplePaginator', function() {
     });
   });
 
+  describe('leftTruncated', function() {
+    it('should return "false" if "innerWindow" is undefined', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 10;
+      simplePaginator.innerWindow = undefined;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.leftTruncated()).toEqual(false);
+    });
+
+    it('should return "false" if not out of window', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 1;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.leftTruncated()).toEqual(false);
+    });
+
+    it('should return "true" if out of window', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 10;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.leftTruncated()).toEqual(true);
+    });
+  });
+
+  describe('rightTruncated', function() {
+    it('should return "false" if "innerWindow" is undefined', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 1;
+      simplePaginator.innerWindow = undefined;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.rightTruncated()).toEqual(false);
+    });
+
+    it('should return "false" if not out of window', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 10;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.rightTruncated()).toEqual(false);
+    });
+
+    it('should return "true" if out of window', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 1;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.rightTruncated()).toEqual(true);
+    });
+  });
+
   describe('getPageSet', function() {
-    it('should return 1..totalPages', function() {
+    it('should return 1..totalPages if not specified window', function() {
       simplePaginator.totalPages = 5;
+      simplePaginator.innerWindow = undefined;
 
       expect(simplePaginator.getPageSet()).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('should return 1..5 if currentPage is 1, and window is 4', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 1;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('should return 1..5 if currentPage is 3, and window is 4', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 3;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([1, 2, 3, 4, 5]);
+    });
+
+    it('should return 3..7 if currentPage is 5, and window is 4', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 5;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([3, 4, 5, 6, 7]);
+    });
+
+    it('should return 6..10 if currentPage is 8, and window is 4', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 8;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([6, 7, 8, 9, 10]);
+    });
+
+    it('should return 6..10 if currentPage is 10, and window is 4', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 10;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([6, 7, 8, 9, 10]);
+    });
+
+    it('should return 2..5 if currentPage is 3, and window is 3', function() {
+      simplePaginator.totalPages = 10;
+      simplePaginator.currentPage = 3;
+      simplePaginator.innerWindow = 3;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([2, 3, 4, 5]);
     });
   });
 

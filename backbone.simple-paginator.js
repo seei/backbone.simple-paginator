@@ -61,11 +61,19 @@
       if (!this.origModels) {
         this.origModels = this.models;
         this.totalPages = Math.ceil(this.origModels.length / this.perPage);
+        this.splitWindow();
       }
 
       this.models = this.origModels.slice();
       this.reset(this.models.slice(from, to));
       this.trigger('turn', this.models, this);
+    },
+
+    splitWindow: function() {
+      if (this.innerWindow) {
+        this.innerLeft = Math.floor(this.innerWindow / 2);
+        this.innerRight = Math.ceil(this.innerWindow / 2);
+      }
     },
 
     info: function() {
@@ -76,7 +84,9 @@
         lastPage: this.totalPages,
         next: this.getNext(),
         previous: this.getPrevious(),
-        pageSet: this.getPageSet()
+        pageSet: this.getPageSet(),
+        leftTruncated: this.leftTruncated(),
+        rightTruncated: this.rightTruncated()
       }
     },
 
@@ -88,10 +98,36 @@
       return (this.currentPage > 1) ? this.currentPage - 1 : false;
     },
 
+    leftTruncated: function() {
+      return !!(this.innerWindow && (this.currentPage - this.innerLeft) > 1);
+    },
+
+    rightTruncated: function() {
+      return !!(this.innerWindow && (this.currentPage + this.innerRight) < this.totalPages);
+    },
+
     getPageSet: function() {
       var pages = [];
+      var totalPages = this.totalPages;
+      var min = 1;
+      var max = totalPages;
 
-      for (var i = 1, l = this.totalPages; i <= l; i++) {
+      if (this.innerLeft && this.innerRight) {
+        min = this.currentPage - this.innerLeft;
+        max = this.currentPage + this.innerRight;
+
+        if (min <= 0) {
+          max = max + (1 - min);
+          min = 1;
+        }
+
+        if (max >= totalPages) {
+          min = min - (max - totalPages);
+          max = totalPages;
+        }
+      }
+
+      for (var i = min, l = max; i <= l; i++) {
         pages.push(i);
       }
 
