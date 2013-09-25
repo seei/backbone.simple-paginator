@@ -135,7 +135,7 @@
     },
 
     totalLength: function() {
-      return this.origModels.length;
+      return (this.origModels) ? this.origModels.length : 0;
     },
 
     fetch: function(options) {

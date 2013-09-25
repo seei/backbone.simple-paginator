@@ -345,6 +345,12 @@ describe('Backbone.SimplePaginator', function() {
 
       expect(simplePaginator.totalLength()).toEqual(5);
     });
+
+    it('should return 0 if "origModels" is undefined', function() {
+      simplePaginator.origModels = undefined;
+
+      expect(simplePaginator.totalLength()).toEqual(0);
+    });
   });
 
   describe('fetch', function() {
