@@ -229,8 +229,8 @@ describe('Backbone.SimplePaginator', function() {
     });
 
     it('should return "false" if not out of window', function() {
-      simplePaginator.totalPages = 10;
-      simplePaginator.currentPage = 1;
+      simplePaginator.totalPages = 4;
+      simplePaginator.currentPage = 4;
       simplePaginator.innerWindow = 4;
       simplePaginator.splitWindow();
 
@@ -258,8 +258,8 @@ describe('Backbone.SimplePaginator', function() {
     });
 
     it('should return "false" if not out of window', function() {
-      simplePaginator.totalPages = 10;
-      simplePaginator.currentPage = 10;
+      simplePaginator.totalPages = 4;
+      simplePaginator.currentPage = 1;
       simplePaginator.innerWindow = 4;
       simplePaginator.splitWindow();
 
@@ -277,6 +277,15 @@ describe('Backbone.SimplePaginator', function() {
   });
 
   describe('getPageSet', function() {
+    it('should not return first element under 1', function() {
+      simplePaginator.totalPages = 4;
+      simplePaginator.currentPage = 1;
+      simplePaginator.innerWindow = 4;
+      simplePaginator.splitWindow();
+
+      expect(simplePaginator.getPageSet()).toEqual([1, 2, 3, 4]);
+    });
+
     it('should return 1..totalPages if not specified window', function() {
       simplePaginator.totalPages = 5;
       simplePaginator.innerWindow = undefined;
