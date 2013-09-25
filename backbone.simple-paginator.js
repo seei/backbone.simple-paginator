@@ -99,11 +99,12 @@
     },
 
     leftTruncated: function() {
-      return !!(this.innerWindow && (this.currentPage - this.innerLeft) > 1);
+      return this.getPageSet()[0] > 1;
     },
 
     rightTruncated: function() {
-      return !!(this.innerWindow && (this.currentPage + this.innerRight) < this.totalPages);
+      var pageSet = this.getPageSet();
+      return pageSet[pageSet.length - 1] < this.totalPages;
     },
 
     getPageSet: function() {
@@ -116,13 +117,14 @@
         min = this.currentPage - this.innerLeft;
         max = this.currentPage + this.innerRight;
 
-        if (min <= 0) {
+        if (min < 1) {
           max = max + (1 - min);
           min = 1;
         }
 
         if (max >= totalPages) {
           min = min - (max - totalPages);
+          if (min < 1) min = 1;
           max = totalPages;
         }
       }
