@@ -372,15 +372,4 @@ describe('Backbone.SimplePaginator', function() {
       expect(simplePaginator.origModels).toBeUndefined();
     });
   });
-
-  describe('fetch', function() {
-    it('should delete "origModels"', function() {
-      spyOn(Backbone.Collection.prototype, 'reset');
-
-      simplePaginator.origModels = [1, 2, 3, 4, 5];
-      simplePaginator.reset();
-
-      expect(simplePaginator.origModels).toBeUndefined();
-    });
-  });
 });

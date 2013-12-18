@@ -143,11 +143,6 @@
     fetch: function(options) {
       delete this.origModels;
       return Backbone.Collection.prototype.fetch.call(this, options);
-    },
-
-    reset: function(models, options) {
-      delete this.origModels;
-      return Backbone.Collection.prototype.fetch.call(this, models, options);
     }
 
   });
